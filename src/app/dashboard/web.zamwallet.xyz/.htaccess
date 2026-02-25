@@ -1,0 +1,13 @@
+# Apache Configuration for Next.js
+RewriteEngine On
+
+# Handle root path explicitly
+RewriteCond %{REQUEST_URI} ^/?$
+RewriteRule ^$ http://127.0.0.1:3000/login [L,R=302]
+
+# Handle all other paths
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/_next
+RewriteCond %{REQUEST_URI} !^/api
+RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [L,P]

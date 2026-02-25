@@ -1,0 +1,35 @@
+RewriteEngine On
+RewriteBase /
+
+# Handle root path - redirect to /login
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ /login [L,R=302]
+
+# Serve _next/static files - EXACT MATCH (most specific first)
+RewriteRule ^_next/static/css/(.*)$ - [L]
+RewriteRule ^_next/static/js/(.*)$ - [L]
+RewriteRule ^_next/static/(.*)$ - [L]
+
+# Serve public folder assets
+RewriteRule ^assets/(.*)$ - [L]
+RewriteRule ^(favicon\.ico|apple-touch-icon\.png)$ - [L]
+
+# Pass all other requests to Node.js (if not a file or directory)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [L,P]
+
+# Enable compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache static files
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>

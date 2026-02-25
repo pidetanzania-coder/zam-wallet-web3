@@ -1,0 +1,37 @@
+RewriteEngine On
+
+# Handle root path - redirect to /login
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ /login [L,R=302]
+
+# Serve static files from _next/static directly
+RewriteCond %{REQUEST_URI} ^/_next/static/(.*)$ [NC]
+RewriteRule ^_next/static/(.*)$ /_next/static/$1 [L]
+
+# Serve public folder assets
+RewriteCond %{REQUEST_URI} ^/assets/(.*)$ [NC]
+RewriteRule ^assets/(.*)$ /assets/$1 [L]
+
+# Pass all other requests to Node.js (if not a file or directory)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/_next
+RewriteCond %{REQUEST_URI} !^/api
+RewriteCond %{REQUEST_URI} !^/assets
+RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [L,P]
+
+# Enable compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache static files
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-javascript "access plus 1 month"
+</IfModule>
