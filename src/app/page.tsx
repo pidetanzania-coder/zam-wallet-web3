@@ -232,14 +232,14 @@ export default function LandingPage() {
         </div>
 
         {menuOpen && (
-          <div className="md:hidden bg-[#0d1b2a] border-t border-white/5 relative z-40">
+          <div className="md:hidden fixed inset-0 top-16 bg-[#0d1b2a] border-t border-white/5 z-40 overflow-y-auto">
             <div className="px-6 py-4 space-y-4">
               <a href="#features" onClick={() => setMenuOpen(false)} className="block text-sm text-slate-400 hover:text-white font-medium">Features</a>
               <a href="#networks" onClick={() => setMenuOpen(false)} className="block text-sm text-slate-400 hover:text-white font-medium">Networks</a>
               <a href="#tokens" onClick={() => setMenuOpen(false)} className="block text-sm text-slate-400 hover:text-white font-medium">Tokens</a>
               <a href="#security" onClick={() => setMenuOpen(false)} className="block text-sm text-slate-400 hover:text-white font-medium">Security</a>
               <button
-                onClick={() => { setMenuOpen(false); openAuthModal(); }}
+                onClick={() => { setMenuOpen(false); setShowLoginChoice(true); }}
                 className="w-full py-3 bg-gradient-to-r from-[#06d6a0] to-[#00b4d8] text-[#0a0e17] font-bold rounded-xl"
               >
                 Launch App
