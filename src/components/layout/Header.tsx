@@ -18,6 +18,10 @@ import {
   Moon,
   Menu,
   X,
+  Settings,
+  CreditCard,
+  History,
+  HelpCircle,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -79,6 +83,11 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Mobile: Network selector BEFORE hamburger */}
+          <div className="lg:hidden">
+            <NetworkSelector />
+          </div>
+
           <button
             onClick={toggleTheme}
             className="p-2 rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/15 transition-colors"
@@ -107,7 +116,6 @@ export function Header() {
           {showMobileMenu && (
             <div className="lg:hidden absolute top-16 left-0 right-0 bg-white dark:bg-[#0a0a14] border-b border-slate-200 dark:border-white/10 p-4 z-50">
               <div className="space-y-2">
-                <NetworkSelector />
                 {address && (
                   <button
                     onClick={handleCopy}
@@ -124,6 +132,37 @@ export function Header() {
                     )}
                   </button>
                 )}
+
+                {/* Mobile menu links */}
+                <a
+                  href="/dashboard/settings"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-600 dark:text-slate-300 w-full"
+                >
+                  <Settings className="w-4 h-4" />
+                  <span className="text-sm">Settings</span>
+                </a>
+                <a
+                  href="/dashboard/buy"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-600 dark:text-slate-300 w-full"
+                >
+                  <CreditCard className="w-4 h-4" />
+                  <span className="text-sm">Buy & Sell</span>
+                </a>
+                <a
+                  href="/dashboard/history"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-600 dark:text-slate-300 w-full"
+                >
+                  <History className="w-4 h-4" />
+                  <span className="text-sm">History</span>
+                </a>
+                <a
+                  href="/help"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-600 dark:text-slate-300 w-full"
+                >
+                  <HelpCircle className="w-4 h-4" />
+                  <span className="text-sm">Help</span>
+                </a>
+
                 <button
                   onClick={handleDisconnect}
                   className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors text-red-500 dark:text-red-400 w-full"
