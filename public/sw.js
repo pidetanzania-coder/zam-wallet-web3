@@ -1,7 +1,7 @@
 // Service Worker for Zam Wallet
 // Provides offline support and caching for static assets
 
-const CACHE_NAME = 'zam-wallet-v1';
+const CACHE_NAME = 'zam-wallet-v2';
 const STATIC_ASSETS = [
   '/',
   '/zamd-logo.png',
