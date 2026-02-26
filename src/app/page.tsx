@@ -172,7 +172,7 @@ export default function LandingPage() {
             <Image src="/zamd-logo.png" alt="Zam Wallet" fill className="object-contain" />
           </div>
           <Spinner size="lg" />
-          <p className="mt-4 text-slate-400">Loading wallet...</p>
+          <p className="mt-4 text-slate-400">Please wait...</p>
         </div>
       </div>
     );
