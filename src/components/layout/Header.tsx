@@ -103,6 +103,38 @@ export function Header() {
             )}
           </button>
 
+          {/* Mobile Menu Content */}
+          {showMobileMenu && (
+            <div className="lg:hidden absolute top-16 left-0 right-0 bg-white dark:bg-[#0a0a14] border-b border-slate-200 dark:border-white/10 p-4 z-50">
+              <div className="space-y-2">
+                <NetworkSelector />
+                {address && (
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-2 w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/15 transition-colors"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <span className="text-sm font-mono text-slate-600 dark:text-slate-300">
+                      {shortenAddress(address)}
+                    </span>
+                    {copied ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-500 ml-auto" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5 text-slate-400 ml-auto" />
+                    )}
+                  </button>
+                )}
+                <button
+                  onClick={handleDisconnect}
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors text-red-500 dark:text-red-400 w-full"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span className="text-sm">Disconnect</span>
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="hidden lg:flex items-center gap-2">
             <NetworkSelector />
 
