@@ -2,7 +2,19 @@
 const nextConfig = {
   reactStrictMode: true,
   // Use the app URL for assets
-  assetPrefix: process.env.NEXT_PUBLIC_APP_URL || "https://zamwallet.xyz",
+  assetPrefix: process.env.NEXT_PUBLIC_APP_URL || "https://zamwallet.io",
+  // Cache busting - disable caching for all assets
+  headers: async () => [
+    {
+      source: "/:all*(.*)",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+        },
+      ],
+    },
+  ],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "**" },
