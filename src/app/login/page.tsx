@@ -41,8 +41,26 @@ export default function LoginPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <Spinner size="lg" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        {/* Crypto Icons Animation */}
+        <div className="flex gap-2 mb-6">
+          <div className="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center animate-bounce" style={{ animationDelay: '0ms' }}>
+            <span className="text-lg">₿</span>
+          </div>
+          <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center animate-bounce" style={{ animationDelay: '100ms' }}>
+            <span className="text-lg">Ξ</span>
+          </div>
+          <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center animate-bounce" style={{ animationDelay: '200ms' }}>
+            <span className="text-lg">◈</span>
+          </div>
+          <div className="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center animate-bounce" style={{ animationDelay: '300ms' }}>
+            <span className="text-lg">♦</span>
+          </div>
+          <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center animate-bounce" style={{ animationDelay: '400ms' }}>
+            <span className="text-lg">◎</span>
+          </div>
+        </div>
+        <p className="text-white/60 text-sm">Please wait...</p>
       </div>
     );
   }
