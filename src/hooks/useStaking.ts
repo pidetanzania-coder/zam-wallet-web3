@@ -147,15 +147,22 @@ export function useStaking(userAddress?: string) {
       const canWithdraw = stakedAmount > 0n && lockEndTime <= now;
 
       // Calculate pending rewards (simplified) - ensure all are BigInt
+      // APY = 18%, so daily rate = 18% / 365 = 0.00049315... per day
       const timeStaked = now - lastClaimTime;
       const apy = 18n; // 18%
       const secondsPerYear = 365n * 24n * 60n * 60n;
-      const pendingRewards =
+      
+      // Calculate pending rewards: stakedAmount * (apy/100) * (timeStaked/secondsPerYear)
+      // Using 100 instead of 10000 since apy is already 18, not 1800
+      const pendingRewardsRaw =
         (stakedAmount * apy * timeStaked) /
-        (10000n * secondsPerYear);
+        (100n * secondsPerYear);
 
-      // Use totalEarned from contract + pending rewards
-      const earnedNum = (Number(totalEarned) + Number(pendingRewards)) / 1e6;
+      // Convert to human readable (6 decimals for ZAMD)
+      const pendingRewards = Number(pendingRewardsRaw) / 1e6;
+      const totalEarnedNum = Number(totalEarned) / 1e6;
+      const earnedNum = totalEarnedNum + pendingRewards;
+      
       const stakedAmountNum = Number(stakedAmount) / 1e6;
       const totalStakedNum = Number(totalStakedResult) / 1e6;
       const rewardPoolNum = Number(rewardPoolResult) / 1e6;

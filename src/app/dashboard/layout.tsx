@@ -87,14 +87,20 @@ export default function DashboardLayout({
     // Don't redirect during initialization - let the session restore first
     if (isInitializing) return;
     
-    // Add a delay to allow Alchemy session to restore after initialization
+    // Add a longer delay to allow Alchemy session to fully restore
     const timer = setTimeout(() => {
-      // After delay, only redirect if user is NOT logged in
+      // Only redirect if user is definitely NOT logged in (not just loading)
       if (!isConnected && !isLocalLogin) {
-        router.push("/");
+        // Double-check after a short delay
+        const checkAgain = setTimeout(() => {
+          if (!isConnected && !isLocalLogin) {
+            router.push("/");
+          }
+        }, 1000);
+        return () => clearTimeout(checkAgain);
       }
       // If user is connected, stay on current page
-    }, 1500); // 1.5 seconds delay for session restoration
+    }, 2500); // 2.5 seconds delay for session restoration
     
     return () => clearTimeout(timer);
   }, [isInitializing, isConnected, isLocalLogin, router]);
@@ -108,9 +114,13 @@ export default function DashboardLayout({
     );
   }
 
-  // If not initialized and not logged in, show nothing (will redirect)
+  // If not initialized and not logged in, show loading (session might be restoring)
   if (!isConnected && !isLocalLogin) {
-    return null;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
   }
 
   return (

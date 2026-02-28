@@ -614,7 +614,7 @@ export default function EarnPage() {
         </div>
         <div className="card text-center">
           <p className="text-xs text-slate-400 dark:text-slate-500 mb-1">Total Earned</p>
-          <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">${totalEarned.toFixed(4)}</p>
+          <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">{totalEarned.toFixed(2)} ZAMD</p>
         </div>
       </div>
 
@@ -688,7 +688,7 @@ export default function EarnPage() {
         {totalStaked > 0 && (
           <div className="relative mt-4 flex items-center gap-2 px-3 py-2 bg-white/10 rounded-lg">
             <TrendingUp className="w-4 h-4" />
-            <span className="text-sm">Daily earnings: ~${dailyEarnings.toFixed(4)}</span>
+            <span className="text-sm">Daily earnings: ~{dailyEarnings.toFixed(4)} ZAMD</span>
           </div>
         )}
       </div>
