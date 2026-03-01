@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
-import {
-  getOrCreateUser,
-  getUserByWallet,
-  getReferralStats,
-  getReferralSettings,
-} from "@/lib/db";
+
+// Use your cPanel server URL
+// Replace with your actual domain
+const API_BASE_URL = process.env.REFERRAL_API_URL || "http://decisive-peach-hummingbird.135-181-108-109.cpanel.site/api/referral.php";
 
 export async function GET(request: Request) {
   try {
@@ -15,42 +13,27 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Wallet address required" }, { status: 400 });
     }
 
-    // Get or create user
-    const user = await getOrCreateUser(wallet);
+    // Call PHP API on your server
+    const response = await fetch(`${API_BASE_URL}?wallet=${encodeURIComponent(wallet)}`);
+    
+    if (!response.ok) {
+      throw new Error(`API returned ${response.status}`);
+    }
 
-    // Get referral stats
-    const stats = await getReferralStats(wallet);
+    const data = await response.json();
 
-    // Get settings
-    const settings = await getReferralSettings();
+    if (data.error) {
+      return NextResponse.json({ error: data.error }, { status: 400 });
+    }
 
-    return NextResponse.json({
-      success: true,
-      user: {
-        wallet_address: user.wallet_address,
-        referral_code: user.referral_code,
-        referred_by: user.referred_by,
-        referral_bonus_earned: user.referral_bonus_earned || 0,
-        referral_bonus_staked: user.referral_bonus_staked || 0,
-      },
-      stats: {
-        total_referrals: stats?.total_referrals || 0,
-        total_bonus_earned: stats?.total_bonus_earned || 0,
-      },
-      settings: {
-        new_user_bonus: parseFloat(settings.new_user_bonus || "25"),
-        referrer_bonus: parseFloat(settings.referrer_bonus || "5"),
-        min_stake_amount: parseFloat(settings.min_stake_amount || "25"),
-        active: settings.active === "1",
-      },
-    });
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Referral API error:", error);
     return NextResponse.json(
       { 
         error: "Failed to get referral info", 
         details: String(error),
-        hint: "Check database connection and environment variables" 
+        hint: "Check that your server API is running and accessible" 
       },
       { status: 500 }
     );
@@ -66,17 +49,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Wallet address required" }, { status: 400 });
     }
 
-    // Get or create user with optional referral code
-    const user = await getOrCreateUser(wallet, referralCode);
-
-    return NextResponse.json({
-      success: true,
-      user: {
-        wallet_address: user.wallet_address,
-        referral_code: user.referral_code,
-        referred_by: user.referred_by,
+    // Call PHP API on your server
+    const response = await fetch(API_BASE_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        wallet,
+        referralCode: referralCode || null,
+      }),
     });
+
+    if (!response.ok) {
+      throw new Error(`API returned ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.error) {
+      return NextResponse.json({ error: data.error }, { status: 400 });
+    }
+
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Referral API error:", error);
     return NextResponse.json(
