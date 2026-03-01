@@ -118,7 +118,7 @@ export function useTokenBalances() {
             tokenData.push({
               contractAddress: ZAMD_CONTRACT,
               symbol: "ZAMD",
-              name: "Zam Wallet Token",
+              name: "Zam Dollar",
               decimals: ZAMD_DECIMALS,
               balance: zamdRawBalance,
               balanceFormatted: zamdFormatted,

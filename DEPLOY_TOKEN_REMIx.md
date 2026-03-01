@@ -56,7 +56,7 @@ contract ZAMDToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
         address initialOwner,
         uint256 initialSupply,
         uint256 cap_
-    ) ERC20("Zam Wallet Token", "ZAMD") Ownable(initialOwner) {
+    ) ERC20("Zam Dollar", "ZAMD") Ownable(initialOwner) {
         require(cap_ > 0, "ZAMDToken: cap is 0");
         require(initialSupply <= cap_, "ZAMDToken: initialSupply exceeds cap");
         
