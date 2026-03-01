@@ -15,6 +15,7 @@ import {
   Wallet,
   TrendingUp,
   TrendingDown,
+  Users,
 } from "lucide-react";
 
 const navItems = [
@@ -29,6 +30,7 @@ const navItems = [
 ];
 
 const bottomItems = [
+  { href: "/dashboard/referral", label: "Referral", icon: Users, badge: "New" },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
   { href: "#", label: "Help", icon: HelpCircle },
 ];
