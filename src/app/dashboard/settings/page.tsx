@@ -356,8 +356,8 @@ export default function SettingsPage() {
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-slate-500 dark:text-slate-400">Website</span>
-            <a href="https://web.zamwallet.xyz" className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">
-              web.zamwallet.xyz
+            <a href="https://web.zamwallet.io" className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">
+              web.zamwallet.io
             </a>
           </div>
         </div>

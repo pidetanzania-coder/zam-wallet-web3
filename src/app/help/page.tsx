@@ -111,7 +111,7 @@ const faqs: FAQItem[] = [
   // Support
   {
     question: "How do I contact support?",
-    answer: "You can reach our support team at:\n- Email: support@zamwallet.xyz\n- Website: https://zamwallet.xyz\n\nPlease note: Our team will NEVER ask for your seed phrase or private keys.",
+    answer: "You can reach our support team at:\n- Email: support@zamwallet.io\n- Website: https://zamwallet.io\n\nPlease note: Our team will NEVER ask for your seed phrase or private keys.",
     category: "support"
   },
   {
@@ -239,7 +239,7 @@ export default function HelpFAQ() {
           <h3 className="text-xl font-bold text-white mb-2">Still have questions?</h3>
           <p className="text-slate-300 mb-4">Our support team is here to help</p>
           <a 
-            href="mailto:support@zamwallet.xyz"
+            href="mailto:support@zamwallet.io"
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#06d6a0] to-[#00b4d8] text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-[rgba(6,214,160,0.3)] transition-all"
           >
             <Mail className="w-5 h-5" />

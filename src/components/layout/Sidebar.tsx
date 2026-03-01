@@ -23,7 +23,7 @@ const navItems = [
   { href: "/dashboard/receive", label: "Receive", icon: ArrowDownLeft },
   { href: "/dashboard/swap", label: "Swap", icon: Repeat },
   { href: "/dashboard/earn", label: "Earn", icon: TrendingUp },
-  { href: "/dashboard/markets", label: "Prediction", icon: TrendingDown, badge: "New" },
+
   { href: "/dashboard/buy", label: "Buy & Sell", icon: CreditCard, badge: "Soon" },
   { href: "/dashboard/history", label: "History", icon: History },
 ];

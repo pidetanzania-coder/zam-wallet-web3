@@ -320,8 +320,8 @@ export default function TermsOfService() {
               <div className="px-6 pb-4 text-slate-300 space-y-3">
                 <p>For questions or concerns about these Terms, please contact us:</p>
                 <ul className="space-y-2 ml-2">
-                  <li>Email: support@zamwallet.xyz</li>
-                  <li>Website: https://zamwallet.xyz</li>
+                  <li>Email: support@zamwallet.io</li>
+                  <li>Website: https://zamwallet.io</li>
                 </ul>
               </div>
             )}

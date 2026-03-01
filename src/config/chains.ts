@@ -10,37 +10,37 @@ export interface ChainMeta {
 export const SUPPORTED_CHAINS: Record<number, ChainMeta> = {
   1: {
     chain: mainnet,
-    logo: "https://cryptologos.cc/logos/ethereum-eth-logo.svg",
+    logo: "/Ethereum.png",
     alchemyNetwork: "eth-mainnet",
   },
   137: {
     chain: polygon,
-    logo: "https://cryptologos.cc/logos/polygon-matic-logo.svg",
+    logo: "/matic.png",
     alchemyNetwork: "polygon-mainnet",
   },
   42161: {
     chain: arbitrum,
-    logo: "https://cryptologos.cc/logos/arbitrum-arb-logo.svg",
+    logo: "/arbitrum.png",
     alchemyNetwork: "arb-mainnet",
   },
   10: {
     chain: optimism,
-    logo: "https://cryptologos.cc/logos/optimism-ethereum-op-logo.svg",
+    logo: "/optimism.png",
     alchemyNetwork: "opt-mainnet",
   },
   8453: {
     chain: base,
-    logo: "https://avatars.githubusercontent.com/u/108554348?s=200&v=4",
+    logo: "/Base.png",
     alchemyNetwork: "base-mainnet",
   },
   56: {
     chain: bsc,
-    logo: "https://cryptologos.cc/logos/bnb-bnb-logo.svg",
+    logo: "/Ethereum.png", // Using ETH as placeholder - add BSC logo if needed
     alchemyNetwork: "bnb-mainnet",
   },
   42220: {
     chain: celoMainnet,
-    logo: "https://cryptologos.cc/logos/celo-celo-logo.svg",
+    logo: "/Ethereum.png", // Using ETH as placeholder - add Celo logo if needed
     alchemyNetwork: "celo-mainnet",
   },
 };

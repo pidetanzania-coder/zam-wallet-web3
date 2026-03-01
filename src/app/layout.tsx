@@ -7,7 +7,7 @@ import "./globals.css";
 import { ServiceWorkerRegistration } from "@/components/ui/ServiceWorkerRegistration";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://zamwallet.xyz"),
+  metadataBase: new URL("https://zamwallet.io"),
   title: {
     default: "Zam Wallet - Secure Web3 Wallet",
     template: "%s | Zam Wallet",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://zamwallet.xyz",
+    url: "https://zamwallet.io",
     siteName: "Zam Wallet",
     title: "Zam Wallet - Secure Web3 Wallet",
     description:

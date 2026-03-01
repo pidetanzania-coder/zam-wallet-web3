@@ -15,7 +15,6 @@ import {
   ArrowDownLeft,
   Repeat,
   TrendingUp,
-  TrendingDown,
   Settings,
 } from "lucide-react";
 import Link from "next/link";
@@ -26,7 +25,7 @@ const navItems = [
   { href: "/dashboard/receive", label: "Receive", icon: ArrowDownLeft },
   { href: "/dashboard/swap", label: "Swap", icon: Repeat },
   { href: "/dashboard/earn", label: "Earn", icon: TrendingUp },
-  { href: "/dashboard/markets", label: "Prediction", icon: TrendingDown },
+
 ];
 
 export default function DashboardLayout({
