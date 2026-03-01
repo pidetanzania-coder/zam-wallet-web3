@@ -1,7 +1,37 @@
 import { NextResponse } from "next/server";
 
-// Polymarket API - simple REST endpoint for markets
-const API_V1 = "https://clob.polymarket.com/markets?closed=false&archived=false&limit=20";
+// Polymarket API - using Builder API keys
+const API_KEY = process.env.POLYMARKET_API_KEY;
+const API_SECRET = process.env.POLYMARKET_SECRET;
+const API_PASSPHRASE = process.env.POLYMARKET_PASSPHRASE;
+
+// Polymarket GraphQL endpoint
+const POLYMARKET_GRAPHQL = "https://clob.polymarket.com/graphql";
+
+// GraphQL query for markets
+const MARKETS_QUERY = `
+  query GetMarkets($limit: Int) {
+    markets(limit: $limit, closed: false, archived: false) {
+      id
+      question
+      description
+      slug
+      image
+      volume
+      volume24hr
+      liquidity
+      clobTokenIds
+      endDate
+      startDate
+      active
+      closed
+      archived
+      outcomes
+      outcomePrices
+      traderCounts
+    }
+  }
+`;
 
 // In-memory cache for markets (30 seconds)
 let marketsCache: {
@@ -26,12 +56,23 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Fetch from Polymarket REST API
-    const response = await fetch(API_V1, {
-      method: "GET",
-      headers: {
-        "Accept": "application/json",
-      },
+    // Fetch from Polymarket GraphQL API with Builder keys
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    
+    // Add API key if available
+    if (API_KEY) {
+      headers["Authorization"] = `Bearer ${API_KEY}`;
+    }
+
+    const response = await fetch(POLYMARKET_GRAPHQL, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        query: MARKETS_QUERY,
+        variables: { limit },
+      }),
       next: { revalidate: 30 },
     });
 
@@ -40,14 +81,24 @@ export async function GET(request: Request) {
     }
 
     const data = await response.json();
-    console.log("Polymarket API response keys:", Object.keys(data || {}));
+    console.log("Polymarket GraphQL response:", JSON.stringify(data).substring(0, 500));
 
     let markets: any[] = [];
 
-    if (data.markets && Array.isArray(data.markets)) {
-      markets = data.markets.map((market: any) => {
-        // Get prices from acceptedOrderState
-        const prices = market.acceptedOrderState?.prices || [];
+    if (data.data?.markets) {
+      const rawMarkets = data.data.markets;
+      markets = rawMarkets.map((market: any) => {
+        // Parse outcome prices if string
+        let prices: string[] = [];
+        if (market.outcomePrices) {
+          try {
+            prices = typeof market.outcomePrices === "string" 
+              ? JSON.parse(market.outcomePrices) 
+              : market.outcomePrices;
+          } catch {
+            prices = [];
+          }
+        }
         const outcomePrices = Array.isArray(prices) ? prices : [];
         
         // Get volume info
@@ -72,7 +123,7 @@ export async function GET(request: Request) {
           archived: market.archived === true,
           outcomes: market.outcomes || ["Yes", "No"],
           prices: outcomePrices,
-          traderCount: parseInt(market.traderCount || "0"),
+          traderCount: parseInt(market.traderCounts || "0"),
           url: `https://polymarket.com/market/${market.slug || market.conditionId}`,
           createdAt: market.createdAt || new Date().toISOString(),
         };
