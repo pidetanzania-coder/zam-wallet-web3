@@ -101,7 +101,7 @@ export function useTokenBalances() {
       );
 
       // Auto-add ZAMD token on Polygon (chain ID 137) if not already in list
-      const ZAMD_CONTRACT = "0x932992Af6b3305E3fbfAb811a4c3eA1531361A5a";
+      const ZAMD_CONTRACT = "0x0A46e040e135b967F501Bb46ad27375c8c979268";
       const ZAMD_DECIMALS = 6;
       const ZAMD_PRICE_USD = 1.0; // ZAMD is pegged at $1 (not yet on market)
       if (chain.id === 137) {

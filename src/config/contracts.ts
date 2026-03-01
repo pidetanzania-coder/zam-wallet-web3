@@ -37,10 +37,17 @@ export const CONTRACTS = {
   },
   // ZAMD Token (Polygon)
   zamdToken: {
-    address: "0x932992af6b3305e3fbfab811a4c3ea1531361a5a",
+    address: "0x0A46e040e135b967F501Bb46ad27375c8c979268",
     decimals: 6,
     symbol: "ZAMD",
-    name: "ZAMD",
+    name: "Zam Dollar",
+  },
+  // ZAMD Token (BSC)
+  zamdTokenBSC: {
+    address: "0x0A46e040e135b967F501Bb46ad27375c8c979268",
+    decimals: 6,
+    symbol: "ZAMD",
+    name: "Zam Dollar",
   },
 } as const;
 

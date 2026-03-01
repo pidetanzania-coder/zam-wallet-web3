@@ -37,7 +37,7 @@ export const SWAP_TOKENS: Record<number, SwapToken[]> = {
     { address: "0x53E0bca35eC356BD5ddDFEbdD1Fc0fD03FaBad39", symbol: "LINK", name: "Chainlink", decimals: 18, logo: "https://cryptologos.cc/logos/chainlink-link-logo.svg" },
     { address: "0xB5C064F955D8e7F38FE0460C556a72987494EE17", symbol: "QUICK", name: "QuickSwap", decimals: 18, logo: "https://assets.coingecko.com/coins/images/13970/small/1_pOU6pBMEmiL-ZJVb0CYRjQ.png" },
     { address: "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6", symbol: "WBTC", name: "Wrapped Bitcoin", decimals: 8, logo: "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.svg" },
-    { address: "0x932992Af6b3305E3fbfAb811a4c3eA1531361A5a", symbol: "ZAMD", name: "Zam Wallet Token", decimals: 6, logo: "/zamd-logo.png" },
+    { address: "0x0A46e040e135b967F501Bb46ad27375c8c979268", symbol: "ZAMD", name: "Zam Dollar", decimals: 6, logo: "/zamd-logo.png" },
   ],
   42161: [
     { address: NATIVE_TOKEN_ADDRESS, symbol: "ETH", name: "Ethereum", decimals: 18, logo: "https://cryptologos.cc/logos/ethereum-eth-logo.svg" },

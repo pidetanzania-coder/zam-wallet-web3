@@ -4,7 +4,7 @@ import { privateKeyToAccount } from "viem/accounts";
 import { polygon } from "viem/chains";
 
 // ZAMD Token Configuration
-const ZAMD_TOKEN = "0x932992af6b3305e3fbfab811a4c3ea1531361a5a";
+const ZAMD_TOKEN = "0x0A46e040e135b967F501Bb46ad27375c8c979268";
 const ZAMD_DECIMALS = 6;
 
 // Admin wallet configuration
