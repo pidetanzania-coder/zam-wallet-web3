@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     referred_by VARCHAR(100) DEFAULT NULL,
     referral_bonus_earned DECIMAL(20, 8) DEFAULT 0,
     referral_bonus_staked DECIMAL(20, 8) DEFAULT 0,
+    referral_bonus_claimed TINYINT(1) DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_wallet (wallet_address),
