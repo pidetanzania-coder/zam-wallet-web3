@@ -1,44 +1,17 @@
 import { NextResponse } from "next/server";
 
-// Polymarket API - using Builder API keys
+// Polymarket API - using the correct endpoints
 const API_KEY = process.env.POLYMARKET_API_KEY;
-const API_SECRET = process.env.POLYMARKET_SECRET;
-const API_PASSPHRASE = process.env.POLYMARKET_PASSPHRASE;
 
-// Polymarket GraphQL endpoint
-const POLYMARKET_GRAPHQL = "https://clob.polymarket.com/graphql";
-
-// GraphQL query for markets
-const MARKETS_QUERY = `
-  query GetMarkets($limit: Int) {
-    markets(limit: $limit, closed: false, archived: false) {
-      id
-      question
-      description
-      slug
-      image
-      volume
-      volume24hr
-      liquidity
-      clobTokenIds
-      endDate
-      startDate
-      active
-      closed
-      archived
-      outcomes
-      outcomePrices
-      traderCounts
-    }
-  }
-`;
+// Polymarket CLOB API endpoints
+const CLOB_API = "https://clob.polymarket.com";
 
 // In-memory cache for markets (30 seconds)
 let marketsCache: {
   data: any;
   timestamp: number;
 } | null = null;
-const CACHE_DURATION = 30 * 1000; // 30 seconds
+const CACHE_DURATION = 30 * 1000;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -56,110 +29,81 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Fetch from Polymarket GraphQL API with Builder keys
+    // Build headers
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
     };
     
     // Add API key if available
     if (API_KEY) {
-      headers["Authorization"] = `Bearer ${API_KEY}`;
+      headers["POLY-API-KEY"] = API_KEY;
     }
 
-    const response = await fetch(POLYMARKET_GRAPHQL, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        query: MARKETS_QUERY,
-        variables: { limit },
-      }),
-      next: { revalidate: 30 },
-    });
+    // Try fetching markets from the CLOB API
+    const marketsResponse = await fetch(
+      `${CLOB_API}/info/markets?active=true&closed=false&limit=${limit}`,
+      {
+        method: "GET",
+        headers,
+        next: { revalidate: 30 },
+      }
+    );
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!marketsResponse.ok) {
+      console.error("Markets API error:", marketsResponse.status, marketsResponse.statusText);
+      throw new Error(`HTTP error! status: ${marketsResponse.status}`);
     }
 
-    const data = await response.json();
-    console.log("Polymarket GraphQL response:", JSON.stringify(data).substring(0, 500));
+    const marketsData = await marketsResponse.json();
+    console.log("Markets data keys:", Object.keys(marketsData || {}));
 
     let markets: any[] = [];
+    
+    // Handle different response formats
+    const rawMarkets = marketsData.markets || marketsData;
 
-    if (data.data?.markets) {
-      const rawMarkets = data.data.markets;
-      markets = rawMarkets.map((market: any) => {
-        // Parse outcome prices if string
-        let prices: string[] = [];
-        if (market.outcomePrices) {
-          try {
-            prices = typeof market.outcomePrices === "string" 
-              ? JSON.parse(market.outcomePrices) 
-              : market.outcomePrices;
-          } catch {
-            prices = [];
-          }
+    if (Array.isArray(rawMarkets)) {
+      markets = rawMarkets.slice(0, limit).map((market: any) => {
+        // Extract prices - might be in different formats
+        let prices: string[] = ["0.5", "0.5"];
+        
+        if (market.acceptedOrderState?.prices) {
+          prices = market.acceptedOrderState.prices;
+        } else if (market.candles && market.candles.length > 0) {
+          // Use last candle close as price
+          const lastCandle = market.candles[market.candles.length - 1];
+          prices = [String(lastCandle.close || 0.5)];
         }
-        const outcomePrices = Array.isArray(prices) ? prices : [];
-        
-        // Get volume info
-        const volume = parseFloat(market.volume || "0");
-        const volume24hr = parseFloat(market.volume24hr || "0");
-        
+
         return {
           id: market.id || market.conditionId,
           question: market.question || market.title || "Unknown Market",
           description: market.description || "",
-          slug: market.slug || market.conditionId,
-          image: market.imageUrl || "",
-          volume,
-          volume24hr,
+          slug: market.slug || "",
+          image: market.imageUrl || market.icon || "",
+          volume: parseFloat(market.volume || "0"),
+          volume24hr: parseFloat(market.volume24hr || "0"),
           liquidity: parseFloat(market.liquidity || "0"),
           clobTokenIds: market.clobTokenIds || [],
           endDate: market.endDate || null,
           startDate: market.startDate || null,
-          gameStartTime: null,
+          gameStartTime: market.gameStartTime || null,
           active: market.active !== false,
           closed: market.closed === true,
           archived: market.archived === true,
           outcomes: market.outcomes || ["Yes", "No"],
-          prices: outcomePrices,
-          traderCount: parseInt(market.traderCounts || "0"),
+          prices: prices,
+          traderCount: parseInt(market.uniqueStakers || market.traderCount || "0"),
           url: `https://polymarket.com/market/${market.slug || market.conditionId}`,
           createdAt: market.createdAt || new Date().toISOString(),
         };
       });
     }
 
-    // If no markets, try alternative format
-    if (markets.length === 0 && data.data) {
-      const altMarkets = Array.isArray(data.data) ? data.data : [];
-      markets = altMarkets.map((market: any) => ({
-        id: market.id || market.conditionId,
-        question: market.question || "Unknown Market",
-        description: market.description || "",
-        slug: market.slug || market.conditionId,
-        image: "",
-        volume: parseFloat(market.volume || "0"),
-        volume24hr: parseFloat(market.volume24hr || "0"),
-        liquidity: parseFloat(market.liquidity || "0"),
-        clobTokenIds: [],
-        endDate: null,
-        startDate: null,
-        active: true,
-        closed: false,
-        archived: false,
-        outcomes: ["Yes", "No"],
-        prices: [],
-        traderCount: 0,
-        url: `https://polymarket.com/market/${market.slug || market.conditionId}`,
-        createdAt: new Date().toISOString(),
-      }));
-    }
-
     const responseData = {
-      markets: markets.slice(0, limit),
+      markets,
       pageInfo: {
-        hasNextPage: markets.length > limit,
+        hasNextPage: markets.length >= limit,
         endCursor: null,
       },
     };
