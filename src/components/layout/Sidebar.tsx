@@ -14,6 +14,7 @@ import {
   HelpCircle,
   Wallet,
   TrendingUp,
+  TrendingDown,
 } from "lucide-react";
 
 const navItems = [
@@ -21,7 +22,8 @@ const navItems = [
   { href: "/dashboard/send", label: "Send", icon: ArrowUpDown },
   { href: "/dashboard/receive", label: "Receive", icon: ArrowDownLeft },
   { href: "/dashboard/swap", label: "Swap", icon: Repeat },
-  { href: "/dashboard/earn", label: "Earn", icon: TrendingUp, badge: "New" },
+  { href: "/dashboard/earn", label: "Earn", icon: TrendingUp },
+  { href: "/dashboard/markets", label: "Markets", icon: TrendingDown, badge: "New" },
   { href: "/dashboard/buy", label: "Buy & Sell", icon: CreditCard, badge: "Soon" },
   { href: "/dashboard/history", label: "History", icon: History },
 ];
