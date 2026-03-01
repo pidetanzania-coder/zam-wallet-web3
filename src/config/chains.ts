@@ -35,12 +35,12 @@ export const SUPPORTED_CHAINS: Record<number, ChainMeta> = {
   },
   56: {
     chain: bsc,
-    logo: "/Ethereum.png", // Using ETH as placeholder - add BSC logo if needed
+    logo: "/bsc.png",
     alchemyNetwork: "bnb-mainnet",
   },
   42220: {
     chain: celoMainnet,
-    logo: "/Ethereum.png", // Using ETH as placeholder - add Celo logo if needed
+    logo: "/cello.png",
     alchemyNetwork: "celo-mainnet",
   },
 };
