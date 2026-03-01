@@ -88,6 +88,35 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="color-scheme" content="light dark" />
+        {/* Chatwoot Widget */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(d,t) {
+                var BASE_URL="https://app.chatwoot.com";
+                var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+                g.src=BASE_URL+"/packs/js/sdk.js";
+                g.defer=true;
+                g.async=true;
+                s.parentNode.insertBefore(g,s);
+                g.onload=function(){
+                  window.chatwootSettings={
+                    "position":"bottom-right",
+                    "type":"standard",
+                    "launcherTitle":"Chat with us",
+                    "websiteToken":"154183",
+                    "locale":"en",
+                    "mainColor":"#007bff"
+                  };
+                  window.chatwootSDK.run({
+                    websiteToken: '154183',
+                    baseUrl: BASE_URL
+                  });
+                }
+              })(document,"script");
+            `,
+          }}
+        />
       </head>
       <body className="min-h-screen bg-[var(--background)] antialiased">
         <ServiceWorkerRegistration />
