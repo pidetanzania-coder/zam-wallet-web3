@@ -47,7 +47,11 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("Referral API error:", error);
     return NextResponse.json(
-      { error: "Failed to get referral info", details: String(error) },
+      { 
+        error: "Failed to get referral info", 
+        details: String(error),
+        hint: "Check database connection and environment variables" 
+      },
       { status: 500 }
     );
   }
