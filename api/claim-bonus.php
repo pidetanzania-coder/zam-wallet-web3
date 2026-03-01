@@ -14,7 +14,7 @@ $POLYGON_RPC = "https://polygon-rpc.com";
 
 // Admin wallet (from environment or config)
 $ADMIN_PRIVATE_KEY = "0xe259b7b8f8f32d83b66073bfd11e6a8ba37540b10ab8ad95994537ddf4571d79";
-$ADMIN_ADDRESS = "0x2CebB4956eAE90F3E5f55d1dE7f89E480aDb9f68";
+$ADMIN_ADDRESS = "0x1769d8B5F892d313E812bE64015477ed0B3397a4";
 
 // Bonus amounts
 $NEW_USER_BONUS = 25 * 1e6; // 25 ZAMD (6 decimals)
