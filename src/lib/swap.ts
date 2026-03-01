@@ -71,6 +71,7 @@ export const SWAP_TOKENS: Record<number, SwapToken[]> = {
     { address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bd095", symbol: "WBNB", name: "Wrapped BNB", decimals: 18, logo: "https://cryptologos.cc/logos/binance-coin-bnb-logo.svg" },
     { address: "0x7130d2A12B9BCbFAe4f2634d864A1BCe1Cf3C37", symbol: "BTCB", name: "Bitcoin BEP2", decimals: 18, logo: "https://cryptologos.cc/logos/bitcoin-btc-logo.svg" },
     { address: "0x2170Ed0880ac9A755fd29B2688956BD959F933F8", symbol: "WETH", name: "Wrapped ETH", decimals: 18, logo: "https://cryptologos.cc/logos/weth-weth-logo.svg" },
+    { address: "0x0A46e040e135b967F501Bb46ad27375c8c979268", symbol: "ZAMD", name: "Zam Dollar", decimals: 6, logo: "/zamd-logo.png" },
   ],
   42220: [
     { address: NATIVE_TOKEN_ADDRESS, symbol: "CELO", name: "Celo", decimals: 18, logo: "https://cryptologos.cc/logos/celo-celo-logo.svg" },
