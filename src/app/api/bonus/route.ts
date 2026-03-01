@@ -8,7 +8,7 @@ const ZAMD_TOKEN = "0x932992af6b3305e3fbfab811a4c3ea1531361a5a";
 const ZAMD_DECIMALS = 6;
 
 // Admin wallet configuration
-const ADMIN_PRIVATE_KEY = (process.env.ADMIN_PRIVATE_KEY || "0xe259b7b8f8f32d83b66073bfd11e6a8ba37540b10ab8ad95994537ddf4571d79") as `0x${string}`;
+const ADMIN_PRIVATE_KEY = (process.env.ADMIN_PRIVATE_KEY || "") as `0x${string}`;
 const ADMIN_ADDRESS = "0x1769d8B5F892d313E812bE64015477ed0B3397a4";
 
 // Bonus amounts
