@@ -26,7 +26,7 @@ const navItems = [
   { href: "/dashboard/receive", label: "Receive", icon: ArrowDownLeft },
   { href: "/dashboard/swap", label: "Swap", icon: Repeat },
   { href: "/dashboard/earn", label: "Earn", icon: TrendingUp },
-  { href: "/dashboard/markets", label: "Markets", icon: TrendingDown },
+  { href: "/dashboard/markets", label: "Prediction", icon: TrendingDown },
 ];
 
 export default function DashboardLayout({
